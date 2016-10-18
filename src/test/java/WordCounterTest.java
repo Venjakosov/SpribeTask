@@ -44,7 +44,7 @@ public class WordCounterTest extends Assert {
     @Test
     public void testThreadSafe(){
         wcs.getWordCounter().clear();
-        final int threadCount = 10;
+        final int threadCount = 100;
 
         for (int i = 0; i < threadCount; i++) {
             Thread th = new Thread(new Runnable() {
@@ -54,20 +54,22 @@ public class WordCounterTest extends Assert {
 
                     // randomly access to service
                     if(System.currentTimeMillis() % 2 == 0){
-                        wcs.sendWord("valia");
+                        wcs.sendWord("barsuk");
                         wcs.getWordCount("venja");
+                    }else{
+                        wcs.sendWord("lera");
                     }
                 }
             });
             th.start();
             try {
-                th.sleep(1);
+                th.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        int actualCount = wcs.getWordCount("venja");
 
+        int actualCount = wcs.getWordCount("venja");
         Assert.assertEquals(threadCount, actualCount);
     }
 

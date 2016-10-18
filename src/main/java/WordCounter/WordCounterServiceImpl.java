@@ -29,14 +29,11 @@ public class WordCounterServiceImpl implements WordCounterService {
     public void sendWord(String word) {
         word = word.toLowerCase();
         int count = getWordCount(word);
-        if(count == 0){
-            wordCounter.put(word, count + 1);
-        }else{
-            wordCounter.put(word, ++count);
-        }
+        wordCounter.put(word, ++count);
+
     }
 
-    public ConcurrentHashMap<String, Integer> getWordCounter() {
+    public  ConcurrentHashMap<String, Integer> getWordCounter() {
         return wordCounter;
     }
 
